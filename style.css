@@ -1,9 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Spinnaker&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300&display=swap');
-
+:root{
+    --header: #FFA400;
+    --h_shadow: #DB3A34;
+    --left_bg: #0E1116;
+    --right_bg: #ACB0BD;
+    --hue:  #22262F;
+}
 body{
-    background: #CAFAFE;
+    background: var(--header);
     font-family: 'Mulish', sans-serif;
     width: 100%;
     height: 100%;
@@ -16,21 +22,13 @@ html{
     padding:0;
     margin:0;
 }
-.para-text, .table-text{
-    font-size: medium;
-
-}
 
 #website-title{
     text-align: center;
     font-family: 'Spinnaker', sans-serif;
     text-transform: uppercase;
-    text-shadow: 0.08em 0.08em gray;
-    font-size: 2.5em;
+    text-shadow: 0.08em 0.08em var(--h_shadow);
 }
-
-
-
 
 .course-field{
     padding-top :  1px;
@@ -47,62 +45,192 @@ html{
     flex: 1 1 auto;
     display: flex;
     height: 100%;
-    background-color: grey;
 }
 footer{
-    flex-flow:row;
     width: 100%;
-    flex: 0 1 40px;
-    font-size: small;
+    flex-shrink: 0;
+    height: 40px;
     text-align: center;
 }
+/**LEFT CONTENTS**/
 .left{
-    background-color: red;
+    background-color: var(--left_bg);
     width: 40%;
+    overflow-y: auto;
+    color: white;
 }
-.left label{
-    color:pink;
-    display: inline-block;
-}s
-.left input{
-    width: 80%;
+/**ADDED COURSES**/
+.left .addedcourses{
+  margin-bottom: 3%;
+  display:inline-block;
+  width: 20%;
+  height: 30%;
+  border-radius: 5px;
+  border: 2px solid var(--header);
 }
+.left .addedcourses .course{
+    width: 100%;
+    height: 2em;
+    float:left;
+    background-color:  var(--hue);
+    border-collapse:collapse;
+    font-weight: bold;
+}
+.left .addedcourses .course .name{
+    float:left;
+    margin-top: .3em;
+    margin-left: .2em;
+}
+.left .addedcourses .course:nth-child(even) {background-color: var(--hue);}
+.left .addedcourses .course:nth-child(odd) {border-bottom: 1px solid white;}
+.left .addedcourses .course button:hover{background-color: red;cursor:pointer;outline:none}
+.left .addedcourses .course button:focus{outline:none}
+.left .addedcourses .course button{
+    color: white;
+    float: right;
+    border: none;
+    height: 100%;
+    width: 2em;
+    border-left: 1px solid white;
+    background-color: var(--left_bg);
+}
+/****/
 .left .add-course{
   width: 60%;
-  background-color: whitesmoke;
-  border-radius: 20px;
-  border: black;
-  border-style: solid;
-  display: block;
+  height: 40%;
+  border-radius: 5px;
+  border: 2px solid var(--header);
+  background-color: var(--hue);
+  padding: 5px;
+  display: flex;
+  justify-content: left;
+  flex-flow: row wrap;
+}
+.left .add-course div{
+    margin:.5em;
+}
+.left .add-course label{
+    margin-top:.5em;
+    margin-right: .5em;
+}
+.left .add-course input{
+  border-radius: 5px;
+  padding: 12px 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+.left .add-course .quarter{
+    display:inline-flex;
+    flex-grow: 1;
+}
+.left .add-course .quarter input{
+    width: 100px;
+}
+.left .add-course .year{
+    display:inline-flex;
+    flex-grow: 1;
+}
+.left .add-course .year input{
+    width: 50px;
+}
+.left .add-course .department{
+    display:inline-flex;
+    flex-grow:1;
+}
+.left .add-course .department input{
+    width: 300px;
+}
+.left .add-course .coursenumber{
+    display:inline-flex;
+    flex-grow: 2;
+}
+.left .add-course .coursenumber input{
+    width: 100px;
+}
+.left .add-course .time{
+    display:inline-flex;
+    flex-grow: 1;
+}
+.left .add-course .time input{
+  width: 75px;
+}
+.left .add-course input:focus{
+  border-color: var(--h_shadow);
+  outline: none;
+}
+.left .add-course select{
+  border-radius: 5px;
+}
+.left .add-course select:focus{
+  border-color: var(--h_shadow);
+  outline: none;
 }
 
+.left .submit{
+    border-radius: 5px;
+    border: 2px solid var(--header);
+    background-color: var(--hue);
+    color: white;
+    padding: 5px;
+    margin-top: 3%;
+    cursor: pointer;
+}
+.left .submit:hover{background-color: red;}
+.left .submit:focus{outline: none;}.left .submit:focus{outline: none;}
+/**RIGHT CONTENTS**/
 .right{
-    background-color: blue;
+    background-color: var(--right_bg);
     float:right;
     width: 60%;
-
+    display:flex;
+    flex-flow: column;
+    flex: 1 1 auto;
+    height: 100%;
 }
 
 .main-title{
     font-style: bold;
-    font-size: xx-large;
     text-align: center;
     margin-bottom: 0.5em;
 }
-table, th, td{
-    border: 1px solid black;
-    border-collapse: collapse;
+.right .nestedrow {
+  display:flex;
+  flex-flow: column;
+  flex: 1;
+  height: 0;
+}
+.right table,.right th,.right td{
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    table-layout:fixed;
+    width: 100%;
+}
+.right th{
+    position: sticky;
+    top: 0;
+    background-color: var(--h_shadow);
+    border-collapse: separate;
     padding: 15px;
 }
-
-table{
-    width: 72%;
+.right table{
+    width: 100%;
+    border-collapse:collapse;
 }
-
-th, td{
-    width: 12%;
+.right td{
+    color: white;
+    padding: 15px;
 }
-
-.table-text{
-    text-align: center;
+.right td:nth-child(1){
+    width: 10%;
+}
+.right td:nth-child(n+2){
+    width: 18%;
+}
+.right .fixedTable{
+  background-color:#900C3F;
+  overflow: auto;
+  max-height: 100%;
+}
+.right .fixedTable .courseslot{
+    background-color:red;
 }
