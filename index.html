@@ -19,6 +19,9 @@
                       <div class='course'><div class='name'>ICS 33</div><button class='remove'>X</button></div>
                       <div class='course'><div class='name'>INF 43</div><button class='remove'>X</button></div>
                     </div>
+					{% if message %}
+						<p>{{ message }}</p>
+					{% endif %}
                     <form method='post'>                        
                         <div class = 'add-course'>
                             <div class='quarter'>
