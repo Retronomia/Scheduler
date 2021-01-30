@@ -1,9 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Spinnaker&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300&display=swap');
-
+:root{
+    --header: #FFA400;
+    --h_shadow: #DB3A34;
+    --left_bg: #374A67;
+    --right_bg: #ACB0BD;
+}
 body{
-    background: #CAFAFE;
+    background: var(--header);
     font-family: 'Mulish', sans-serif;
     width: 100%;
     height: 100%;
@@ -25,12 +30,9 @@ html{
     text-align: center;
     font-family: 'Spinnaker', sans-serif;
     text-transform: uppercase;
-    text-shadow: 0.08em 0.08em gray;
+    text-shadow: 0.08em 0.08em var(--h_shadow);
     font-size: 2.5em;
 }
-
-
-
 
 .course-field{
     padding-top :  1px;
@@ -56,14 +58,15 @@ footer{
     font-size: small;
     text-align: center;
 }
+/**LEFT CONTENTS**/
 .left{
-    background-color: red;
+    background-color: var(--left_bg);
     width: 40%;
 }
 .left label{
     color:pink;
     display: inline-block;
-}s
+}
 .left input{
     width: 80%;
 }
@@ -75,12 +78,24 @@ footer{
   border-style: solid;
   display: block;
 }
-
+.left table,.left th,.left td{
+    border-collapse:collapse;
+    border-style: hidden;
+    padding: 3px;
+}
+.left th {
+  background-color: var(--h_shadow);
+  color: white;
+}
+.left tr:nth-child(even) {background-color: #f2f2f2;}
+.left tr:nth-child(odd) {background-color: #ffffff;}
+.left th, .left td{border: 1px solid black;}
+.left tr:hover {background-color: #ddd;}
+/**RIGHT CONTENTS**/
 .right{
-    background-color: blue;
+    background-color: var(--right_bg);
     float:right;
     width: 60%;
-
 }
 
 .main-title{
@@ -89,17 +104,18 @@ footer{
     text-align: center;
     margin-bottom: 0.5em;
 }
-table, th, td{
+.right table,.right th,.right td{
     border: 1px solid black;
     border-collapse: collapse;
     padding: 15px;
 }
-
-table{
+.right table{
     width: 72%;
 }
-
-th, td{
+.right .overflow {
+    overflow: auto;
+}
+.right th,.right td{
     width: 12%;
 }
 
