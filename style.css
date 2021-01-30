@@ -52,9 +52,9 @@ html{
     background-color: grey;
 }
 footer{
-    flex-flow:row;
     width: 100%;
-    flex: 0 1 40px;
+    flex-shrink: 0;
+    height: 40px;
     font-size: small;
     text-align: center;
 }
@@ -62,26 +62,16 @@ footer{
 .left{
     background-color: var(--left_bg);
     width: 40%;
+    overflow-y: auto;
 }
-.left label{
-    color:pink;
-    display: inline-block;
-}
-.left input{
-    width: 80%;
-}
-.left .add-course{
-  width: 60%;
-  background-color: whitesmoke;
-  border-radius: 20px;
-  border: black;
-  border-style: solid;
-  display: block;
+.left .addedcourses{
+  margin-bottom: 3%;
 }
 .left table,.left th,.left td{
     border-collapse:collapse;
     border-style: hidden;
-    padding: 3px;
+    padding: .5em;
+    font-size: .9em;
 }
 .left th {
   background-color: var(--h_shadow);
@@ -90,12 +80,58 @@ footer{
 .left tr:nth-child(even) {background-color: #f2f2f2;}
 .left tr:nth-child(odd) {background-color: #ffffff;}
 .left th, .left td{border: 1px solid black;}
-.left tr:hover {background-color: #ddd;}
+.left .addedcourses td:nth-child(2):hover {background-color: red;cursor:pointer;}
+.left .add-course{
+  width: 60%;
+  height: 40%;
+  color: red;
+  background-color: whitesmoke;
+  padding: 5px;
+  display: block;
+  align-content: space-around;
+}
+.left .add-course input{
+  display:flex;
+  font-size: 1em;
+  border-radius: 5px;
+  padding: 12px 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+.left .add-course .year{
+  width: 100px;
+}
+.left .add-course .department{
+  width: 100px;
+}
+.left .add-course .coursenumber{
+  width: 100px;
+}
+.left .add-course .time{
+  width: 75px;
+}
+.left .add-course input:focus{
+  border-color: var(--h_shadow);
+  outline: none;
+}
+.left .add-course select{
+  border-radius: 5px;
+  font-size: 1em;
+}
+.left .add-course select:focus{
+  border-color: var(--h_shadow);
+  outline: none;
+}
+
 /**RIGHT CONTENTS**/
 .right{
     background-color: var(--right_bg);
     float:right;
     width: 60%;
+    display:flex;
+    flex-flow: column;
+    flex: 1 1 auto;
+    height: 100%;
 }
 
 .main-title{
@@ -109,16 +145,30 @@ footer{
     border-collapse: collapse;
     padding: 15px;
 }
-.right table{
-    width: 72%;
+.right .nestedrow {
+  background-color: green;
+  display:flex;
+  flex-flow: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
-.right .overflow {
-    overflow: auto;
+.right .fixedTable{ /**REPLACE WITH DIV BECAUSE FUCK TABLES APPARENTLY*/
+  background-color:red;
+  overflow-y: auto;
+  height: 200px;
 }
-.right th,.right td{
-    width: 12%;
+.fixedTable thead th {
+  position: sticky;
+  top: 0;
 }
-
-.table-text{
-    text-align: center;
+.right table {
+  border-collapse: collapse;
+  width: 100%;
+  left: 0;
+  top: 0;
+  table-layout: fixed;
+}
+.right th {
+  background: #eee;
 }

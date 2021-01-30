@@ -14,34 +14,40 @@
             <div class='left'>
                 <h2 class="main-title">Choose A Course</h2>
                 <center>
-                    <h2>Added Courses:</h2>
-                    <table>
-                    <tr>
-                        <td class="table-text">ICS 33</td>
-                        <td class="table-text">X</td>
-                    </tr>
-                    <tr>
-                        <td class="table-text">INF 43</td>
-                        <td class="table-text">X</td>
-                    </tr>
-                    </table>
-                    <form>
-                        <label class="para-text" for="name">Quarter</label>
-                        <input name="name" type="text">
-                        <p></p>
-                        <label class="para-text" for="name">Year</label>
-                        <input name="name" type="text">
-                        <p></p>
-                        
+                    <div class='addedcourses'>
+                      <h2>Added Courses:</h2>
+                      <table>
+                      <tr>
+                          <td class="table-text">ICS 33</td>
+                          <td class="table-text">X</td>
+                      </tr>
+                      <tr>
+                          <td class="table-text">INF 43</td>
+                          <td class="table-text">X</td>
+                      </tr>
+                      </table>
+                    </div>
+                    <form>                        
                         <div class = 'add-course'>
+                            <label class="para-text" for="name">Quarter</label>
+                            <select id="quarter" name="name">
+                              <option value="summer">Summer</option>
+                              <option value="fall">Fall</option>
+                              <option value="winter">Winter</option>
+                              <option value="spring">Spring</option>
+                            </select>
+                            <p></p>
+                            <label class="para-text" for="name">Year</label>
+                            <input class='year' name="name" type="text">
+                            <p></p>
                             <label class="para-text course-field" for="name">Department</label>
-                            <input class = "course-field" name="name" type="text">
+                            <input class = "course-field department" name="name" type="text">
                             <p></p>
                             <label class="para-text course-field" for="name">Course Number</label>
-                            <input name="name" type="text">
+                            <input name="name" class="coursenumber" type="text">
                             <p></p>
                             <label class="para-text course-field" for="name">Preferred Time</label>
-                            <input name="name" type="text">
+                            <input name="name" class="time" type="text">
                             <p></p>
                         </div>
                     </form>
@@ -83,9 +89,12 @@
             </div>
             <div class='right'>
                 <h2 class="main-title">Your Courses</h2>
-                <center>
+                    <div class='nestedrow'>
+                      <div class='fixedTable'>                           
+                                              
                     <table>
-                                                <tr>
+                      <thead>
+                          <tr>
                             <th class="table-text">Time</th>
                             <th class="table-text">Monday</th>
                             <th class="table-text">Tuesday</th>
@@ -93,8 +102,8 @@
                             <th class="table-text">Thursday </th>
                             <th class="table-text">Friday</th>
                         </tr>
-                    </table>
-                    <table class='overflow'>
+                      </thead>
+                      <tbody>
                         <tr>
                             <td class="table-text">7:00 AM</td>
                             <td class="table-text"></td>
@@ -223,8 +232,10 @@
                             <td class="table-text"></td>
                             <td class="table-text"></td>
                         </tr>
+                      </tbody>
                     </table>
-                </center>
+                      </div>
+                    </div>
             </div>
         </div>
         <footer>
