@@ -27,31 +27,45 @@ html{
     text-transform: uppercase;
     text-shadow: 0.08em 0.08em gray;
     font-size: 2.5em;
-    height: 10%;
 }
 
-
-#footer{
-    font-size: small;
-    text-align: center;
-}
 
 
 
 .course-field{
     padding-top :  1px;
 }
-
+.contents{
+    display:flex;
+    flex-flow: column;
+    height: 100%;
+}
+.contents #website-title{
+    flex: 0 1 auto;
+}
+.contents .coursesect{
+    flex: 1 1 auto;
+    display: flex;
+    height: 100%;
+    background-color: grey;
+}
+footer{
+    flex-flow:row;
+    width: 100%;
+    flex: 0 1 40px;
+    font-size: small;
+    text-align: center;
+}
 .left{
     background-color: red;
     width: 40%;
-    height: 100%;
-    float:left;
 }
 .left label{
     color:pink;
-    text-align:rogjt;
     display: inline-block;
+}s
+.left input{
+    width: 80%;
 }
 .left .add-course{
   width: 60%;
@@ -59,14 +73,14 @@ html{
   border-radius: 20px;
   border: black;
   border-style: solid;
-  display:inline-flexbox;
-  align-content:left;
+  display: block;
 }
 
 .right{
     background-color: blue;
     float:right;
     width: 60%;
+
 }
 
 .main-title{

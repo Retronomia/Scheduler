@@ -15,7 +15,12 @@ class TimeComparison:
 
         self.days = set()
         self.start_time = (int(match.group('hstart')), int(match.group('mstart')))
-        self.end_time = (int(match.group('hend')) if match.group('pm') else 12 + int(match.group('hend')), int(match.group('mend')))
+        self.end_time = (int(match.group('hend')), int(match.group('mend')))
+
+        if match.group('pm') and self.end_time[0] != 12:
+            self.end_time = self.end_time[0] + 12, self.end_time[1]
+        if abs(self.end_time[0] - self.start_time[0]) > 4:
+            self.start_time = self.start_time[0] + 12, self.start_time[1]
 
         if match.group('mon'):
             self.days.add('M')
@@ -28,7 +33,15 @@ class TimeComparison:
         if match.group('fri'):
             self.days.add('F')
     
-    def conflicts_with(self, other: TimeComparison) -> bool:
+    def conflicts_with(self, other: 'TimeComparison') -> bool:
+        same_days = False
+        for day in self.days:
+            if day in other.days:
+                same_days = True
+
+        if not same_days:
+            return False
+
         starts_after_other_ends = False
         ends_before_other_starts = False
 
@@ -50,10 +63,12 @@ def generate_all_classes(classes: list) -> list:
     #recursive, generate list of all possible schedules - no matter valid or not
     pass
 
-# [{course_code:{instructor: str, type: str, time: str, final: str, status: str, section: str}, ...}]
+# lmk what you think, but this should just be a dict, not a list, if we're sorting by
+# course code v
+# {course_code:{instructor: str, type: str, time: str, final: str, status: str, section: str}, ...}
 
-# NO IDEA IF IT WORKS, NO IDEA HOW TO TEST IT LOL
-def is_valid_time(classes: list) -> bool:
+# Tested somewhat, this seems to work!!!
+def is_valid_time(classes: dict) -> bool:
     #jakub
     '''
     checks if the classes (time, finals) are conflicting
@@ -64,6 +79,8 @@ def is_valid_time(classes: list) -> bool:
         class1_time = TimeComparison(class1['time'])
         class1_final = TimeComaprison(class1['final'])
         for class2 in classes.values():
+            if class1 is class2:
+                continue
             class2_time = TimeComparison(class2['time'])
             class2_final = TimeComparison(class2['final'])
             if class1_time.conflicts_with(class2_time) or class1_final.conflicts_with(class2_final):
