@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Spinnaker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300&display=swap');
+
+body{
+    background: #CAFAFE;
+    font-family: 'Mulish', sans-serif;
+}
+
+.para-text, .table-text{
+    font-size: medium;
+}
+
+#website-title{
+    text-align: center;
+    font-family: 'Spinnaker', sans-serif;
+    text-transform: uppercase;
+    text-shadow: 0.08em 0.08em gray;
+    font-size: 2.5em;
+}
+
+.main-title{
+    font-style: bold;
+    font-size: xx-large;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+#footer{
+    font-size: small;
+    text-align: center;
+}
+
+table, th, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 15px;
+}
+
+table{
+    width: 75%;
+}
+
+th, td{
+    width: 10%;
+}
+
+.table-text{
+    text-align: center;
+}
+
