@@ -4,8 +4,9 @@
 :root{
     --header: #FFA400;
     --h_shadow: #DB3A34;
-    --left_bg: #374A67;
+    --left_bg: #0E1116;
     --right_bg: #ACB0BD;
+    --hue:  #22262F;
 }
 body{
     background: var(--header);
@@ -14,7 +15,6 @@ body{
     height: 100%;
     padding:0;
     margin:0;
-    font-size: medium;
 }
 html{
     width: 100%;
@@ -28,7 +28,6 @@ html{
     font-family: 'Spinnaker', sans-serif;
     text-transform: uppercase;
     text-shadow: 0.08em 0.08em var(--h_shadow);
-    font-size: 2.5em;
 }
 
 .course-field{
@@ -46,13 +45,11 @@ html{
     flex: 1 1 auto;
     display: flex;
     height: 100%;
-    background-color: grey;
 }
 footer{
     width: 100%;
     flex-shrink: 0;
     height: 40px;
-    font-size: small;
     text-align: center;
 }
 /**LEFT CONTENTS**/
@@ -60,51 +57,101 @@ footer{
     background-color: var(--left_bg);
     width: 40%;
     overflow-y: auto;
+    color: white;
 }
+/**ADDED COURSES**/
 .left .addedcourses{
   margin-bottom: 3%;
+  display:inline-block;
+  width: 20%;
+  height: 30%;
+  border-radius: 5px;
+  border: 2px solid var(--header);
 }
-.left table,.left th,.left td{
+.left .addedcourses .course{
+    width: 100%;
+    height: 2em;
+    float:left;
+    background-color:  var(--hue);
     border-collapse:collapse;
-    border-style: hidden;
-    padding: .5em;
-    font-size: .9em;
+    font-weight: bold;
 }
-.left th {
-  background-color: var(--h_shadow);
-  color: white;
+.left .addedcourses .course .name{
+    float:left;
+    margin-top: .3em;
+    margin-left: .2em;
 }
-.left tr:nth-child(even) {background-color: #f2f2f2;}
-.left tr:nth-child(odd) {background-color: #ffffff;}
-.left th, .left td{border: 1px solid black;}
-.left .addedcourses td:nth-child(2):hover {background-color: red;cursor:pointer;}
+.left .addedcourses .course:nth-child(even) {background-color: var(--hue);}
+.left .addedcourses .course:nth-child(odd) {border-bottom: 1px solid white;}
+.left .addedcourses .course button:hover{background-color: red;cursor:pointer;outline:none}
+.left .addedcourses .course button:focus{outline:none}
+.left .addedcourses .course button{
+    color: white;
+    float: right;
+    border: none;
+    height: 100%;
+    width: 2em;
+    border-left: 1px solid white;
+    background-color: var(--left_bg);
+}
+/****/
 .left .add-course{
   width: 60%;
   height: 40%;
-  color: red;
-  background-color: whitesmoke;
+  border-radius: 5px;
+  border: 2px solid var(--header);
+  background-color: var(--hue);
   padding: 5px;
-  display: block;
-  align-content: space-around;
+  display: flex;
+  justify-content: left;
+  flex-flow: row wrap;
+}
+.left .add-course div{
+    margin:.5em;
+}
+.left .add-course label{
+    margin-top:.5em;
+    margin-right: .5em;
 }
 .left .add-course input{
-  display:flex;
-  font-size: 1em;
   border-radius: 5px;
   padding: 12px 4px;
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
+.left .add-course .quarter{
+    display:inline-flex;
+    flex-grow: 1;
+}
+.left .add-course .quarter input{
+    width: 100px;
+}
 .left .add-course .year{
-  width: 100px;
+    display:inline-flex;
+    flex-grow: 1;
+}
+.left .add-course .year input{
+    width: 50px;
 }
 .left .add-course .department{
-  width: 100px;
+    display:inline-flex;
+    flex-grow:1;
+}
+.left .add-course .department input{
+    width: 300px;
 }
 .left .add-course .coursenumber{
-  width: 100px;
+    display:inline-flex;
+    flex-grow: 2;
+}
+.left .add-course .coursenumber input{
+    width: 100px;
 }
 .left .add-course .time{
+    display:inline-flex;
+    flex-grow: 1;
+}
+.left .add-course .time input{
   width: 75px;
 }
 .left .add-course input:focus{
@@ -113,13 +160,23 @@ footer{
 }
 .left .add-course select{
   border-radius: 5px;
-  font-size: 1em;
 }
 .left .add-course select:focus{
   border-color: var(--h_shadow);
   outline: none;
 }
 
+.left .submit{
+    border-radius: 5px;
+    border: 2px solid var(--header);
+    background-color: var(--hue);
+    color: white;
+    padding: 5px;
+    margin-top: 3%;
+    cursor: pointer;
+}
+.left .submit:hover{background-color: red;}
+.left .submit:focus{outline: none;}.left .submit:focus{outline: none;}
 /**RIGHT CONTENTS**/
 .right{
     background-color: var(--right_bg);
@@ -133,39 +190,47 @@ footer{
 
 .main-title{
     font-style: bold;
-    font-size: xx-large;
     text-align: center;
     margin-bottom: 0.5em;
 }
-.right table,.right th,.right td{
-    border: 1px solid black;
-    border-collapse: collapse;
-    padding: 15px;
-}
 .right .nestedrow {
-  background-color: green;
   display:flex;
   flex-flow: column;
   flex: 1;
-  min-height: 0;
-  overflow: hidden;
+  height: 0;
 }
-.right .fixedTable{ /**REPLACE WITH DIV BECAUSE FUCK TABLES APPARENTLY*/
-  background-color:red;
-  overflow-y: auto;
-  height: 200px;
+.right table,.right th,.right td{
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    table-layout:fixed;
+    width: 100%;
 }
-.fixedTable thead th {
-  position: sticky;
-  top: 0;
+.right th{
+    position: sticky;
+    top: 0;
+    background-color: var(--h_shadow);
+    border-collapse: separate;
+    padding: 15px;
 }
-.right table {
-  border-collapse: collapse;
-  width: 100%;
-  left: 0;
-  top: 0;
-  table-layout: fixed;
+.right table{
+    width: 100%;
+    border-collapse:collapse;
 }
-.right th {
-  background: #eee;
+.right td{
+    color: white;
+    padding: 15px;
+}
+.right td:nth-child(1){
+    width: 10%;
+}
+.right td:nth-child(n+2){
+    width: 18%;
+}
+.right .fixedTable{
+  background-color:#900C3F;
+  overflow: auto;
+  max-height: 100%;
+}
+.right .fixedTable .courseslot{
+    background-color:red;
 }
