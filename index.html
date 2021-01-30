@@ -9,42 +9,49 @@
 </head>
 <main>
     <h1 id="website-title">UCI Schedule Creator</h1>
-    <h2 class="main-title">Choose A Course</h2>
-    <center>
-        <form>
-            <label class="para-text" for="name">Quarter</label>
-            <input name="name" type="text">
-            <p></p>
-            <label class="para-text" for="name">Year</label>
-            <input name="name" type="text">
-            <p></p>
-            <label class="para-text" for="name">Department</label>
-            <input name="name" type="text">
-            <p></p>
-            <label class="para-text" for="name">Course Number</label>
-            <input name="name" type="text">
-            <p></p>
-            <label class="para-text" for="name">Preferred Time</label>
-            <input name="name" type="text">
-            <p></p>
-        </form>
-    </center>
-    <center>
-        <button>Submit</button>
-    </center>
-    <h2 class="main-title">Your Courses</h2>
-    <center>
-        <table>
-            <tr>
-                <th class="table-text">Time</th>
-                <th class="table-text">Monday</th>
-                <th class="table-text">Tuesday</th>
-                <th class="table-text">Wednesday</th>
-                <th class="table-text">Thursday </th>
-                <th class="table-text">Friday</th>
-            </tr>
-        </table>
-    </center>
+    <div class='left'>
+        <h2 class="main-title">Choose A Course</h2>
+        <center>
+            <form>
+                <label class="para-text" for="name">Quarter</label>
+                <input name="name" type="text">
+                <p></p>
+                <label class="para-text" for="name">Year</label>
+                <input name="name" type="text">
+                <p></p>
+                
+                <div class = 'add-course'>
+                    <label class="para-text course-field" for="name">Department</label>
+                    <input class = "course-field" name="name" type="text">
+                    <p></p>
+                    <label class="para-text course-field" for="name">Course Number</label>
+                    <input name="name" type="text">
+                    <p></p>
+                    <label class="para-text course-field" for="name">Preferred Time</label>
+                    <input name="name" type="text">
+                    <p></p>
+                </div>
+            </form>
+            <center>
+                <button>Submit</button>
+            </center>
+        </center>
+    </div>
+    <div class='right'>
+        <h2 class="main-title">Your Courses</h2>
+        <center>
+            <table>
+                <tr>
+                    <th class="table-text">Time</th>
+                    <th class="table-text">Monday</th>
+                    <th class="table-text">Tuesday</th>
+                    <th class="table-text">Wednesday</th>
+                    <th class="table-text">Thursday </th>
+                    <th class="table-text">Friday</th>
+                </tr>
+            </table>
+        </center>
+    </div>
 </main>
 <footer>
     <p id="footer">HackUCI 2021 Project</p>
