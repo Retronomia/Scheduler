@@ -94,15 +94,29 @@ def is_valid_time(classes: dict) -> bool:
     return True
 
 
-def rate_prof(classes: list) -> int:
+def rate_prof(course: dict) -> int:
     # rates based on professor rating, higher rating = good
     # nathan
     pass
 
 
-def rate_time(classes: list, pref_time: int) -> int:
+def rate_time(course: dict, pref_time: (str, str)) -> int:
+    # pref_time input should be a tuple (10:30, 15:30) in 24hour time
     # rates based on distance from time; bigger distance = higher rating, higher rating = bad
-    return abs(CLASS_TIME - pref_time)
+    pref_h_1, pref_m_1 = pref_time[0].split(':')
+    pref_h_2, pref_m_2 = pref_time[1].split(':')
+
+    pref_total_mins_1 = pref_m_1 + 60 * pref_h_1
+    pref_total_mins_2 = pref_m_2 + 60 * pref_h_2
+    pref_avg_mins = round((pref_total_mins_1 + pref_total_mins_2) / 2)
+
+    class_time = TimeComparison(course['time'])
+
+    course_start_mins = class_time.start_time[1] + 60 * class_time.start_time[0]
+    course_end_mins = class_time.end_time[1] + 60 * class_time.end_time[0]
+    course_avg_mins = round((course_start_mins + course_end_mins) / 2)
+
+    return abs(pref_avg_mins - course_avg_mins)
 
 
 if __name__ == '__main__':
