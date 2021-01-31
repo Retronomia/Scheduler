@@ -40,32 +40,36 @@
                     <form method='post' name='const'>
 						<input type="hidden" name="form" value="const">
                         <div class = 'add-course'>
-							<div class='quarter'>
-                                <label>Quarter</label>
-                                <input name="quarter" list='qs' class = "course-field" type="text">
-                                <datalist id='qs'>
-                                    <option value="SUMMER1">SUMMER SESSION 1</option>
-                                    <option value="SUMMER2">SUMMER SESSION 2</option>
-                                    <option value="SUMMER10">10WK SUMMER</option>
-                                    <option value="SUMMERCOM">SUMMER QTR (COM)</option>
-                                    <option value="FALL">FALL</option>
-                                    <option value="WINTER">WINTER</option>
-                                    <option value="SPRING">SPRING</option>
-                                </datalist>
-                            </div>
-							<div class= "year">
-                                <label class="text course-field">Year</label>
-                                <input name="year" class = "course-field" type="text">
-                            </div>
-							 <div class= "time">
-                                <label class="text course-field">Preferred Start Time</label>
-                                <input name="time" list='ts' class = "course-field" type="text">
-                                <datalist id='ts'>
-                                    <option value="Morning">Morning</option>
-                                    <option value="Noon">Noon</option>
-                                    <option value="Afternoon">Afternoon</option>
-                                </datalist>
-                            </div>
+							<center>
+								<div class='qy'>
+									<div class='quarter'>
+										<label>Quarter</label>
+										<input name="quarter" list='qs' class = "course-field" type="text">
+										<datalist id='qs'>
+											<option value="SUMMER1">SUMMER SESSION 1</option>
+											<option value="SUMMER2">SUMMER SESSION 2</option>
+											<option value="SUMMER10">10WK SUMMER</option>
+											<option value="SUMMERCOM">SUMMER QTR (COM)</option>
+											<option value="FALL">FALL</option>
+											<option value="WINTER">WINTER</option>
+											<option value="SPRING">SPRING</option>
+										</datalist>
+									</div>
+									<div class= "year">
+										<label class="text course-field">Year</label>
+										<input name="year" class = "course-field" type="text">
+									</div>
+								</div>
+								 <div class= "time">
+									<label class="text course-field">Preferred Start Time</label>
+									<input name="time" list='ts' class = "course-field" type="text">
+									<datalist id='ts'>
+										<option value="Morning">Morning</option>
+										<option value="Noon">Noon</option>
+										<option value="Afternoon">Afternoon</option>
+									</datalist>
+								</div>
+							</center>
                         </div>
 						<button class='submit' type='submit'>Update</button>
 					</form>
@@ -236,7 +240,7 @@
                     </form>
 					<form method='post'>
 					<input type="hidden" name="course_gen">
-					<button class='submit' type='submit'>Generate Courses</button>
+					<button class='submit gen' type='submit'>Generate Courses</button>
 					</form>
                 </center>
             </div>
@@ -296,8 +300,11 @@
                       <tbody>
 
                         {% for interval in range(0, 90) %}
-                        
-                        <tr>
+                        {% if interval is divisibleby 6%}
+                        <tr style='background-color:#ddd'>
+						{%else%}
+						<tr>
+						{%endif%}
                             {% if interval is divisibleby 6 %}
                             <td>{{ time_increments[ interval//6 ]  }}</td>
 
@@ -307,7 +314,7 @@
 
                             {% if (interval in table_dict) and ('M' in table_dict[interval][1]) %}
                             
-                            <td rowspan =  {{  (table_dict[interval][3] - table_dict[interval][2])  //10 }} > {{table_dict[interval][0]}}</td>
+                            <td class='mod' rowspan =  {{  (table_dict[interval][3] - table_dict[interval][2])  //10 }} > {{table_dict[interval][0]}}</td>
 
                             {%else%}
                             <td></td>
@@ -316,7 +323,7 @@
                             
                             {% if (interval in table_dict) and ('Tu' in table_dict[interval][1]) %}
                             
-                            <td rowspan =  {{(table_dict[interval][3] - table_dict[interval][2])//10 }} > {{table_dict[interval][0]}}</td>
+                            <td class='mod' rowspan =  {{(table_dict[interval][3] - table_dict[interval][2])//10 }} > {{table_dict[interval][0]}}</td>
 
                             {%else%}
                             <td></td>
@@ -325,7 +332,7 @@
 
                             {% if (interval in table_dict) and ('W' in table_dict[interval][1]) %}
                             
-                            <td rowspan =  {{(table_dict[interval][3] - table_dict[interval][2])//10 }} > {{table_dict[interval][0]}}</td>
+                            <td class='mod' rowspan =  {{(table_dict[interval][3] - table_dict[interval][2])//10 }} > {{table_dict[interval][0]}}</td>
 
                             {%else%}
                             <td></td>
@@ -334,7 +341,7 @@
 
                             {% if (interval in table_dict) and ('Th' in table_dict[interval][1]) %}
                             
-                            <td rowspan =  {{(table_dict[interval][3] - table_dict[interval][2])//10 }} > {{table_dict[interval][0]}}</td>
+                            <td class='mod' rowspan =  {{(table_dict[interval][3] - table_dict[interval][2])//10 }} > {{table_dict[interval][0]}}</td>
 
                             {%else%}
                             <td></td>
@@ -343,10 +350,10 @@
 
                             {% if (interval in table_dict) and ('F' in table_dict[interval][1]) %}
                             
-                            <td rowspan =  {{(table_dict[interval][3] - table_dict[interval][2])//10 }} > {{table_dict[interval][0]}}</td>
+                            <td class='mod' rowspan =  {{(table_dict[interval][3] - table_dict[interval][2])//10 }} > {{table_dict[interval][0]}}</td>
 
                             {%else%}
-                            <td></td>
+                            <td> </td>
 
                             {% endif %}
 

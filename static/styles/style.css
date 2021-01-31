@@ -7,6 +7,7 @@
     --right_bg: #ACB0BD;
     --hue:  #22262F;
     --h_shadow: grey;
+	--accent: #00ffff;
 }
 body{
     background: var(--header);
@@ -50,6 +51,7 @@ footer{
     width: 100%;
     flex-shrink: 0;
     height: 40px;
+	font-size: .7em;
     text-align: center;
 }
 /**LEFT CONTENTS**/
@@ -81,6 +83,7 @@ footer{
     margin-top: .3em;
     margin-left: .2em;
 }
+
 .left .addedcourses .course:nth-child(even) {background-color: var(--hue);}
 .left .addedcourses .course:nth-child(odd) {border-bottom: 1px solid white;}
 .left .addedcourses .course button:hover{background-color: red;cursor:pointer;outline:none}
@@ -119,19 +122,16 @@ footer{
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
-.left .add-course .quarter{
-    display:inline-flex;
+.left .add-course .qy{
+	display:inline-flex;
+	justify-content: center;
     flex-grow: 1;
 }
 .left .add-course .quarter input{
-    width: 20%;
-}
-.left .add-course .year{
-    display:inline-flex;
-    flex-grow: 1;
+    width: 60%;
 }
 .left .add-course .year input{
-	width: 20%;
+	width: 40%;
 }
 .left .add-course .department{
     display:inline-flex;
@@ -165,18 +165,24 @@ footer{
   border-color: var(--h_shadow);
   outline: none;
 }
-
 .left .submit{
     border-radius: 5px;
-    border: 2px solid var(--header);
+    border: 2px solid var(--accent);
     background-color: var(--hue);
     color: white;
     padding: 5px;
     margin-top: 3%;
     cursor: pointer;
+	margin-bottom: 3%;
 }
 .left .submit:hover{background-color: red;}
 .left .submit:focus{outline: none;}.left .submit:focus{outline: none;}
+
+
+.left .gen{
+	border: 2px solid #FFD700;
+	font-size: 2em;
+}
 /**RIGHT CONTENTS**/
 .right{
     background-color: var(--right_bg);
@@ -245,7 +251,7 @@ footer{
 }
 .right #Timetable table,.right #Timetable th,.right #Timetable td{
     border-right: 1px solid black;
-    border-bottom: 1px solid black;
+    border-bottom: 1px dashed black;
     table-layout:fixed;
     width: 100%;
 }
@@ -263,10 +269,13 @@ footer{
 }
 .right #Timetable td{
     color: black;
-    padding: 15px;
+    padding: 10px;
+	height: 1em;
 }
 .right #Timetable td:nth-child(1){
     width: 10%;
+	font-weight: bold;
+	font-size: 1em;
 }
 .right #Timetable td:nth-child(n+2){
     width: 18%;
@@ -278,4 +287,8 @@ footer{
 }
 .right .fixedTable .courseslot{
     background-color:#FF9999;
+}
+.right .mod{
+	vertical-align: top;
+	background-color: #BEF2F1;
 }
