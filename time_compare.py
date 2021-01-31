@@ -3,7 +3,7 @@ import re
 # For TimeComparison class
 TIME_RE = re.compile(
     r'^((?P<mon>M)|(?P<tue>Tu)|(?P<wed>W)|(?P<thu>Th)|(?P<fri>F))+ +(?P<hstart>\d?\d):(?P<mstart>\d\d)- *(?P<hend>\d?\d):(?P<mend>\d\d)(?P<pm>p)?$')
-FINAL_RE = re.compile(r'^(?P<day>.+)(?P<hstart>\d?\d):(?P<mstart>\d\d)- *(?P<hend>\d?\d):(?P<mend>\d\d)(?P<pm>pm)$')
+FINAL_RE = re.compile(r'^(?P<day>.+)(?P<hstart>\d?\d):(?P<mstart>\d\d)- *(?P<hend>\d?\d):(?P<mend>\d\d)(?P<pm>pm)?(am)?$')
 
 # also someone needs needs to create fake api function in schedule api
 

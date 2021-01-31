@@ -80,6 +80,8 @@ def rate_prof(classes: dict, cache: dict) -> int:
             if result_temp != {}:
                 result += float(result_temp['rating'])
                 total_number += 1
+    if total_number == 0:
+        return 0
     return result / total_number
 
 

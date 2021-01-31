@@ -124,35 +124,36 @@ footer{
     flex-grow: 1;
 }
 .left .add-course .quarter input{
-    width: 100px;
+    width: 20%;
 }
 .left .add-course .year{
     display:inline-flex;
     flex-grow: 1;
 }
 .left .add-course .year input{
-    width: 50px;
+    width: 20%;
 }
 .left .add-course .department{
     display:inline-flex;
     flex-grow:1;
 }
 .left .add-course .department input{
-    width: 300px;
+
+    width: 60%;
 }
 .left .add-course .coursenumber{
     display:inline-flex;
     flex-grow: 2;
 }
 .left .add-course .coursenumber input{
-    width: 100px;
+    width: 40%;
 }
 .left .add-course .time{
     display:inline-flex;
     flex-grow: 1;
 }
 .left .add-course .time input{
-  width: 75px;
+  width: 35%;
 }
 .left .add-course input:focus{
   border-color: var(--h_shadow);

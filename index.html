@@ -44,10 +44,10 @@
                                 <label>Quarter</label>
                                 <input name="quarter" list='qs' class = "course-field" type="text">
                                 <datalist id='qs'>
-                                    <option value="SUMMER1">SUMMER1</option>
-                                    <option value="SUMMER2">SUMMER2</option>
-                                    <option value="SUMMER10">SUMMER10</option>
-                                    <option value="SUMMERCOM">SUMMERCOM</option>
+                                    <option value="SUMMER1">SUMMER SESSION 1</option>
+                                    <option value="SUMMER2">SUMMER SESSION 2</option>
+                                    <option value="SUMMER10">10WK SUMMER</option>
+                                    <option value="SUMMERCOM">SUMMER QTR (COM)</option>
                                     <option value="FALL">FALL</option>
                                     <option value="WINTER">WINTER</option>
                                     <option value="SPRING">SPRING</option>
@@ -55,7 +55,7 @@
                             </div>
                             <div class='year'>
                                 <label>Year</label>
-                                <input name="year" class='year' type="text">
+                                <input name="year" class='course-field year' type="text">
                             </div>
 							 <div class= "time">
                                 <label class="text course-field">Preferred Start Time</label>
@@ -244,7 +244,6 @@
 				<div class="navigation">
 				  <button onclick="openTab('Filter')">Filter</button>
 				  <button onclick="openTab('Timetable')">Timetable</button>
-				  <button onclick="openTab('RMP')">RMP</button>
 				</div>
 				<div class='tab' id='Filter' style="display:flex">
 					<center>
@@ -280,7 +279,7 @@
 					</center>
 				</div>
 				<div class='tab' id='Timetable' style="display:none">
-					<h2 class="main-title">Your Courses</h2>
+                    <h2 class="main-title">Your Courses</h2>
 						<div class='nestedrow'>
                       <div class='fixedTable'>                           
                   <table>
@@ -295,142 +294,75 @@
                         </tr>
                       </thead>
                       <tbody>
+
+                        {% for interval in range(0, 90) %}
+                        
                         <tr>
-                            <td>7:00 AM</td>
+                            {% if interval is divisibleby 6 %}
+                            <td>{{ time_increments[ interval//6 ]  }}</td>
+
+                            {%else%}
                             <td></td>
+                            {% endif %}
+
+                            {% if (interval in table_dict) and ('M' in table_dict[interval][1]) %}
+                            
+                            <td rowspan =  {{  (table_dict[interval][3] - table_dict[interval][2])  //10 }} > {{table_dict[interval][0]}}</td>
+
+                            {%else%}
                             <td></td>
+
+                            {% endif %}
+                            
+                            {% if (interval in table_dict) and ('Tu' in table_dict[interval][1]) %}
+                            
+                            <td rowspan =  {{(table_dict[interval][3] - table_dict[interval][2])//10 }} > {{table_dict[interval][0]}}</td>
+
+                            {%else%}
                             <td></td>
+
+                            {% endif %}
+
+                            {% if (interval in table_dict) and ('W' in table_dict[interval][1]) %}
+                            
+                            <td rowspan =  {{(table_dict[interval][3] - table_dict[interval][2])//10 }} > {{table_dict[interval][0]}}</td>
+
+                            {%else%}
                             <td></td>
+
+                            {% endif %}
+
+                            {% if (interval in table_dict) and ('Th' in table_dict[interval][1]) %}
+                            
+                            <td rowspan =  {{(table_dict[interval][3] - table_dict[interval][2])//10 }} > {{table_dict[interval][0]}}</td>
+
+                            {%else%}
                             <td></td>
+
+                            {% endif %}
+
+                            {% if (interval in table_dict) and ('F' in table_dict[interval][1]) %}
+                            
+                            <td rowspan =  {{(table_dict[interval][3] - table_dict[interval][2])//10 }} > {{table_dict[interval][0]}}</td>
+
+                            {%else%}
+                            <td></td>
+
+                            {% endif %}
+
+
+
+                            
+
                         </tr>
-                        <tr>
-                            <td>8:00 AM</td>
-                            <td rowspan='2' class='courseslot'>I&C 33</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>9:00 AM</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>10:00 AM</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>11:00 AM</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>12:00 PM</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1:00 PM</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2:00 PM</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>3:00 PM</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>4:00 PM</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>5:00 PM</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>6:00 PM</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>7:00 PM</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>8:00 PM</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>9:00 PM</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>10:00 PM</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        {%endfor%}
+
                       </tbody>
                     </table>
                       </div>
                     </div>
 				</div>
-				<div class='tab' id='RMP' style="display:none">
-					RMP
-				</div>
+
 			</div>
         </div>
         <footer>
