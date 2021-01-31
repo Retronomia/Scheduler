@@ -37,6 +37,20 @@ def getform():
 
 
 
+def make_courses():
+    '''
+    d = input('Enter department: ')
+    n = input('Enter course number: ')
+    y = input('Enter year: ')
+    q = input('Enter quarter: ')
+
+    d2 = input('Enter department: ')
+    n2 = input('Enter course number: ')
+    y2 = input('Enter year: ')
+    q2 = input('Enter quarter: ')
+    print(get_data([(d, n, y, q), (d2, n2, y2, q2)]))    '''
+
+
 
 # start the server with the 'run()' method
 if __name__ == '__main__':
