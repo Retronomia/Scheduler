@@ -945,55 +945,13 @@
                             {%else%}
                             <td></td>
                             {% endif %}
-
-                            {% if (interval in table_dict) and ('M' in table_dict[interval][1]) %}
-                            
-                            <td class='mod' id = "{{ gen_courses[0][table_dict[interval][0]]['color'] }}" rowspan =  {{  (table_dict[interval][3] - table_dict[interval][2])  //10 }} > <b>{{gen_courses[0][table_dict[interval][0]]['name'] + " " + gen_courses[0][table_dict[interval][0]]['type']}}</b><br>{{table_dict[interval][0]}}<br>{{gen_courses[0][table_dict[interval][0]]['time']}}</td>
-
-                            {%else%}
-                            <td></td>
-
-                            {% endif %}
-                            
-                            {% if (interval in table_dict) and ('Tu' in table_dict[interval][1]) %}
-                            
-                            <td class='mod' id = "{{ gen_courses[0][table_dict[interval][0]]['color'] }}" rowspan =  {{  (table_dict[interval][3] - table_dict[interval][2])  //10 }} > <b>{{gen_courses[0][table_dict[interval][0]]['name'] + " " + gen_courses[0][table_dict[interval][0]]['type']}}</b><br>{{table_dict[interval][0]}}<br>{{gen_courses[0][table_dict[interval][0]]['time']}}</td>
-
-                            {%else%}
-                            <td></td>
-
-                            {% endif %}
-
-                            {% if (interval in table_dict) and ('W' in table_dict[interval][1]) %}
-                            
-                            <td class='mod' id = "{{ gen_courses[0][table_dict[interval][0]]['color'] }}" rowspan =  {{  (table_dict[interval][3] - table_dict[interval][2])  //10 }} > <b>{{gen_courses[0][table_dict[interval][0]]['name'] + " " + gen_courses[0][table_dict[interval][0]]['type']}}</b><br>{{table_dict[interval][0]}}<br>{{gen_courses[0][table_dict[interval][0]]['time']}}</td>
-
-                            {%else%}
-                            <td></td>
-
-                            {% endif %}
-
-                            {% if (interval in table_dict) and ('Th' in table_dict[interval][1]) %}
-                            
-                            <td class='mod' id = "{{ gen_courses[0][table_dict[interval][0]]['color'] }}" rowspan =  {{  (table_dict[interval][3] - table_dict[interval][2])  //10 }} > <b>{{gen_courses[0][table_dict[interval][0]]['name'] + " " + gen_courses[0][table_dict[interval][0]]['type']}}</b><br>{{table_dict[interval][0]}}<br>{{gen_courses[0][table_dict[interval][0]]['time']}}</td>
-
-                            {%else%}
-                            <td></td>
-
-                            {% endif %}
-
-                            {% if (interval in table_dict) and ('F' in table_dict[interval][1]) %}
-                            
-                            <td class='mod' id = "{{ gen_courses[0][table_dict[interval][0]]['color'] }}" rowspan =  {{  (table_dict[interval][3] - table_dict[interval][2])  //10 }} > <b>{{gen_courses[0][table_dict[interval][0]]['name'] + " " + gen_courses[0][table_dict[interval][0]]['type']}}</b><br>{{table_dict[interval][0]}}<br>{{gen_courses[0][table_dict[interval][0]]['time']}}</td>
-
-                            {%else%}
-                            <td> </td>
-
-                            {% endif %}
-
-
-
-                            
+                            {% for col in range(0,5) %}
+                                {% if table_dict|length == 0 or table_dict[interval][col] == None %}
+                                    <td></td>
+                                {% elif table_dict|length > 0  and table_dict[interval][col] != 'REM' %}
+                                    <td class='mod' id = "{{ gen_courses[0][table_dict[interval][col][0][0]]['color'] }}" rowspan =  {{ table_dict[interval][col][1] }} > <b>{{gen_courses[0][table_dict[interval][col][0][0]]['name'] + " " + gen_courses[0][table_dict[interval][col][0][0]]['type']}}</b><br>{{table_dict[interval][col][0][0]}}<br>{{gen_courses[0][table_dict[interval][col][0][0]]['time']}}</td>
+                                {%endif%}
+                                {%endfor%}
 
                         </tr>
                         {%endfor%}

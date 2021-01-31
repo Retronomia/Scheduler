@@ -281,6 +281,9 @@ footer{
     color: black;
 	height: .7em;
 }
+.right #Timetable tr{
+	height: .7em;
+}
 .right #Timetable td:nth-child(1){
     width: 10%;
 	font-weight: bold;
