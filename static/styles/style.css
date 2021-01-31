@@ -2,8 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Spinnaker&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300&display=swap');
 :root{
-    --header: #FFA400;
-    --h_shadow: #DB3A34;
+    --header: #42A6DB;
     --left_bg: #0E1116;
     --right_bg: #ACB0BD;
     --hue:  #22262F;
@@ -217,7 +216,7 @@ footer{
     border-collapse:collapse;
 }
 .right td{
-    color: white;
+    color: black;
     padding: 15px;
 }
 .right td:nth-child(1){
@@ -227,10 +226,10 @@ footer{
     width: 18%;
 }
 .right .fixedTable{
-  background-color:#900C3F;
+  background-color:#efefef;
   overflow: auto;
   max-height: 100%;
 }
 .right .fixedTable .courseslot{
-    background-color:red;
+    background-color:#FF9999;
 }
