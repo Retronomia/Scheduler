@@ -6,7 +6,7 @@
     --left_bg: #0E1116;
     --right_bg: #ACB0BD;
     --hue:  #22262F;
-    --h_shadow: grey;
+    --h_shadow: #00688B;
 	--accent: #00ffff;
 }
 body{
@@ -265,6 +265,7 @@ footer{
     background-color: var(--h_shadow);
     border-collapse: separate;
     padding: 15px;
+    color: white;
 
 }
 .right #Timetable table{
@@ -273,7 +274,6 @@ footer{
 }
 .right #Timetable td{
     color: black;
-    padding: 5px;
 	height: .7em;
 }
 .right #Timetable td:nth-child(1){
