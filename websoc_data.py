@@ -65,7 +65,8 @@ def make_request(dept, course_num, year, qtr) -> (str, dict):
                     'time': (line.index('Time'), line.index('Place')),
                     'final': (line.index('Final'), line.index('Max')),
                     'status': (line.index('Status'), len(line)),
-                    'section': (line.index('Sec'), line.index('Unt'))
+                    'section': (line.index('Sec'), line.index('Unt')),
+                    'instructor': (line.index('Instructor'), line.index('Time'))
                 }
 
     if not start_line:
@@ -78,7 +79,6 @@ def get_data(classes: list) -> dict:
     final_dict = defaultdict(dict)
     for dept, course_num, year, qtr in classes:
         data, indexes = make_request(dept, course_num, year, qtr)
-        print(indexes)
         for line in data.splitlines():
             name = dept + ' ' + course_num
             code_s, code_e = indexes['course_code']
@@ -87,13 +87,16 @@ def get_data(classes: list) -> dict:
             final_s, final_e = indexes['final']
             status_s, status_e = indexes['status']
             section_s, section_e = indexes['section']
+            instructor_s, instructor_e = indexes['instructor']
 
             final_dict[name][line[code_s:code_e]] = {
+                'name': name,
                 'type': line[type_s:type_e].rstrip(' '),
                 'time': line[time_s:time_e].rstrip(' '),
                 'final': line[final_s:final_e].rstrip(' '),
                 'status': line[status_s:status_e].rstrip(' '),
-                'section': line[section_s:section_e].rstrip(' ')
+                'section': line[section_s:section_e].rstrip(' '),
+                'instructor': line[instructor_s:instructor_e].rstrip(' ')
             }
 
     return dict(final_dict)
