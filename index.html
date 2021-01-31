@@ -256,9 +256,9 @@
 							</tr>
 							{% for c,v in gen_courses[0].items()%}
 							<tr>
-								<td>{{c}}</td>
+								<td>{{v['name']}}</td>
 								<td>{{v['type']}}</td>
-								<td>0123</td>
+								<td>{{c}}</td>
 								<td>{{v['instructor']}}</td>
 								<td>{{v['time']}}</td>
 								<td>{{v['final']}}</td>

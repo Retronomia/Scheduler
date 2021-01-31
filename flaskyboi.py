@@ -4,13 +4,12 @@
 from flask import Flask, request,render_template
 import os
 import urllib
-from websoc_data import get_data
+#from websoc_data import get_data
 project_root = os.path.dirname(__file__)
 template_path = os.path.join(project_root, './')
 app = Flask(__name__, template_folder=template_path)
 message = dict()
-gen_courses = [{'I&C SCI 33': {'type': 'LEC', 'time': 'MWF   1:00- 1:50p', 'final': 'Wed, Mar 17, 1:30-3:30pm', 'status': 'OPEN', 'section': 'A', 'instructor': 'PATTIS, R.'}, 'I&C SCI 33 LAB': {'type': 'LAB', 'time': 'TuTh  2:00- 3:50p', 'final': '', 'status': 'OPEN', 'section': '1', 'instructor': 'CHIO, A.'}, 'I&C SCI 45': {'type': 'LEC', 'time': 'TuTh  5:00- 6:20p', 'final': 'Thu, Mar 18, 4:00-6:00pm', 'status': 'OPEN', 'section': 'A', 'instructor': 'IBRAHIM, M.'}, 'WRITING 39C': {'type': 'SEM', 'time': '*TBA*', 'final': '', 'status': 'OPEN', 'section': 'C', 'instructor': 'VENEGAS, Y.'}}, 3.8]
-
+gen_courses = [{'35570 ': {'name': 'I&C SCI 33', 'type': 'LEC', 'time': 'MWF   1:00- 1:50p', 'final': 'Wed, Mar 17, 1:30-3:30pm', 'status': 'OPEN', 'section': 'A', 'instructor': 'PATTIS, R.'}, '35581 ': {'name': 'I&C SCI 33', 'type': 'LAB', 'time': 'TuTh  2:00- 3:50p', 'final': '', 'status': 'OPEN', 'section': '1', 'instructor': 'CHIO, A.'}, '35600 ': {'name': 'I&C SCI 45', 'type': 'LEC', 'time': 'TuTh  5:00- 6:20p', 'final': 'Thu, Mar 18, 4:00-6:00pm', 'status': 'OPEN', 'section': 'A', 'instructor': 'IBRAHIM, M.'}, '33303 ': {'name': 'WRITING 39C', 'type': 'SEM', 'time': 'TBA', 'final': '', 'status': 'OPEN', 'section': 'C', 'instructor': 'VENEGAS, Y.'}}, 3.8]
 
 @app.route('/', methods=['post', 'get'])
 def getform():
@@ -38,6 +37,8 @@ def getform():
 
 
 def make_courses():
+    message['year']
+    message['quarter']
     '''
     d = input('Enter department: ')
     n = input('Enter course number: ')
