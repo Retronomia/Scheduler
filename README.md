@@ -1,5 +1,3 @@
-To access the UCI Schedule Creator website, please go to http://uci-scheduler.herokuapp.com/
-
 <h1>UCI Schedule Creator Installation Instructions</h1>
 
 Python 3.8.6 or higher is recommended. Git must be installed.

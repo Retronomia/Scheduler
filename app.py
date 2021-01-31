@@ -34,28 +34,31 @@ def page_not_found(e):
 
 @app.route('/', methods=['post', 'get'])
 def getform():
-    global errmsg
+    global errmsg, message, gen_courses, c_input, times_list, table_dict
+    message = dict()
+    gen_courses = []
+    c_input = []
+    times_list = []
+    table_dict = dict()
+
     if request.method == 'POST':
-        if "form" in request.form:
-            if request.form["form"] == "const":
-                quarter = request.form.get('quarter')  # access the data inside 
-                year = request.form.get('year')
-                time = request.form.get('time')
-                message['quarter'] = quarter
-                message['year'] = year
-                message['time'] = time
-            elif request.form["form"] == "speccourse":
-                department = request.form.get('department')
-                cnumber = request.form.get('course-number')
-                if 'courses' in message:
-                    if (cnumber,department) not in message['courses']:
-                        message['courses'].append((cnumber,department))
-                else:
-                    message['courses'] = [(cnumber,department)]
-        elif 'course_rem' in request.form and 'courses' in message:
-            del message['courses'][int(request.form['course_rem'])]
-        elif 'course_gen' in request.form and 'courses' in message and len(message['courses']) > 0 and 'quarter' in message and 'year' in message and 'time' in message:
-            errmsg = make_courses()
+        print(request.form)
+        quarter = request.form.get('quarter')  # access the data inside
+        year = request.form.get('year')
+        time = request.form.get('time')
+        message['quarter'] = quarter
+        message['year'] = year
+        message['time'] = time
+        message['courses'] = []
+
+        for i in range(1, 6):
+            department = request.form.get('department' + str(i))
+            cnumber = request.form.get('course-number' + str(i))
+            if department != "" and cnumber != "" and department != None and cnumber != None:
+                message['courses'].append((cnumber, department))
+        #if 'courses' in message and len(message['courses']) > 0 and 'quarter' in message and 'year' in message and 'time' in message:
+        errmsg = make_courses()
+        print(gen_courses, message)
     return render_template('index.html', message=message,gen_courses=gen_courses,c_input = c_input, time_increments = time_increments, table_dict = table_dict,errmsg=errmsg)
 
 

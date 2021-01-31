@@ -82,7 +82,7 @@ footer{
     float:left;
     margin-top: .3em;
     margin-left: .2em;
-    font-size: .9vw;
+    font-size: 80%;
 }
 
 .left .addedcourses .course:nth-child(even) {background-color: var(--hue);}
@@ -221,16 +221,20 @@ footer{
 	height: 0;
 }
 
+.right .tab #Filter{
+    overflow: auto
+}
+
 .right #Filter table,.right #Filter th,.right #filter td{
     border-collapse:collapse;
     border-style: hidden;
-    white-space:nowrap
 }
 .right #Filter td{
     padding: 5px;
 }
 .right #Filter table{
 	width: 60%;
+	table-layout: fixed;
 }
 .right #Filter th {
   background-color: var(--h_shadow);
