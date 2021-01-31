@@ -131,14 +131,13 @@ footer{
     flex-grow: 1;
 }
 .left .add-course .year input{
-    width: 20%;
+	width: 20%;
 }
 .left .add-course .department{
     display:inline-flex;
     flex-grow:1;
 }
 .left .add-course .department input{
-
     width: 60%;
 }
 .left .add-course .coursenumber{
