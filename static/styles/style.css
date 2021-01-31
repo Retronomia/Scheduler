@@ -102,6 +102,7 @@ footer{
 /****/
 .left .add-course{
   height: 40%;
+  width: 60%;
   border-radius: 5px;
   border: 2px solid var(--header);
   background-color: var(--hue);
