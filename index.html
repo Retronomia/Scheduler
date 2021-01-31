@@ -9,7 +9,7 @@
 </head>
 <body>
 <script>
-	function openTab(tabName,button) {
+	function openTab(tabName) {
 		var i;
 		var x = document.getElementsByClassName("tab");
 		for (i = 0; i < x.length; i++) {
@@ -40,7 +40,7 @@
                     <form method='post' name='const'>
 						<input type="hidden" name="form" value="const">
                         <div class = 'add-course'>
-                        <div class='quarter'>
+							<div class='quarter'>
                                 <label>Quarter</label>
                                 <input name="quarter" list='qs' class = "course-field" type="text">
                                 <datalist id='qs'>
@@ -58,8 +58,13 @@
                                 <input name="year" class='year' type="text">
                             </div>
 							 <div class= "time">
-                                <label class="text course-field">Preferred Time</label>
-                                <input name="time" type="text">
+                                <label class="text course-field">Preferred Start Time</label>
+                                <input name="time" list='ts' class = "course-field" type="text">
+                                <datalist id='ts'>
+                                    <option value="Morning">Morning</option>
+                                    <option value="Noon">Noon</option>
+                                    <option value="Afternoon">Afternoon</option>
+                                </datalist>
                             </div>
                         </div>
 						<button class='submit' type='submit'>Update</button>
@@ -229,18 +234,22 @@
                         </div>
                         <button class='submit' type='submit'>Add Course</button>
                     </form>
+					<form method='post'>
+					<input type="hidden" name="course_gen">
+					<button class='submit' type='submit'>Generate Courses</button>
+					</form>
                 </center>
             </div>
             <div class='right'>
 				<div class="navigation">
 				  <button onclick="openTab('Filter')">Filter</button>
-				  <button onclick="openTab('Timetable'">Timetable</button>
-				  <button onclick="openTab('RMP'">RMP</button>
+				  <button onclick="openTab('Timetable')">Timetable</button>
+				  <button onclick="openTab('RMP')">RMP</button>
 				</div>
 				<div class='tab' id='Filter' style="display:flex">
 					<center>
 						<h2>Generated Courses:</h2>
-						{% if gen_courses == None%}
+						{% if gen_courses == []%}
 						<p>No Courses Were Generated.</p>
 							{%else%}
 							<table>
