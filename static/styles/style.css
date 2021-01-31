@@ -210,6 +210,7 @@ footer{
     background-color: var(--h_shadow);
     border-collapse: separate;
     padding: 15px;
+    color:grey;
 }
 .right table{
     width: 100%;
