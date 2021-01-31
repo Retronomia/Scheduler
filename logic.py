@@ -66,20 +66,33 @@ def is_valid_time(classes: dict) -> bool:
 
 
 # {course_code:{instructor: str, type: str, time: str, final: str, status: str, section: str}, ...}
-def rate_prof(classes: dict, cache: dict) -> int:
+def rate_prof(classes: dict, cache: dict, class_limit: dict) -> int:
     # rates based on professor rating, higher rating = good
+
+    for class1 in class_limit.values():
+        if class1>5:
+            return 0
     result = 0
     total_number = 0
     for class1 in classes.values():
-        if class1["type"] == "LEC":
+        if class1["type"] == "LEC" or class1['type'] == "SEM":
             if "instructor" in class1.keys() and class1["instructor"] in cache.keys():
                 result_temp = cache[class1["instructor"]]
             elif "instructor" in class1.keys():
                 result_temp = find_teacher_rating(class1["instructor"])
                 cache[class1["instructor"]] = result_temp
+            if class1["name"] in class_limit.keys():
+                class_limit[class1["name"]]+=1
+            else:
+                class_limit[class1["name"]]=1
             if result_temp != {}:
-                result += float(result_temp['rating'])
-                total_number += 1
+                if len(result_temp['rating']) > 1 and result_temp['rating'][1] != ".":
+                    result_temp['rating'] = result_temp['rating'][0:1]
+                try:
+                    result += float(result_temp['rating'])
+                    total_number += 1
+                except:
+                    pass
     if total_number == 0:
         return 0
     return result / total_number
@@ -119,9 +132,10 @@ def get_optimal_time(classes: dict, pref_time: (str, str)):
     current_optimal = {}
     avg_prof_rating = 0
     cache = {}
+    class_limit = {}
     for valid_schedule in valid_list:
 
-        prof_rate = rate_prof(valid_schedule, cache)
+        prof_rate = rate_prof(valid_schedule, cache, class_limit)
         time_rate = rate_time(valid_schedule, pref_time)
         weighted_rating = 0.7 * prof_rate + 0.3 * time_rate
         if weighted_rating > best_rating:
@@ -133,10 +147,9 @@ def get_optimal_time(classes: dict, pref_time: (str, str)):
 
 if __name__ == '__main__':
     pref_time = ("10:30", "15:30")
-    test_classes = [("I&C SCI", "33", "2021", "WINTER"), ("I&C SCI", "45", "2021", "WINTER"),
-                    ("WRITING", "39C", "2021", "WINTER")]
+    test_classes = [("WRITING", "39C", "2021", "WINTER"), ("I&C Sci", "33", "2021", "WINTER")]
     test_dict = websoc_data.get_data(test_classes)
-    # print("testdict", test_dict)
+    print("testdict", test_dict)
 
     results = get_optimal_time(test_dict, pref_time)
     print("optimal", results)

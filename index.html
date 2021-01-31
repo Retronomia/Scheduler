@@ -240,7 +240,10 @@
                     </form>
 					<form method='post'>
 					<input type="hidden" name="course_gen">
-					<button class='submit gen' type='submit'>Generate Courses</button>
+                    <button class='submit gen' type='submit'>Generate Courses</button>
+                    {%if errmsg!= ''%}
+                        <h1>Error: {{errmsg}}</h1>
+                    {%endif%}
 					</form>
                 </center>
             </div>

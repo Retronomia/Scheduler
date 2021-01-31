@@ -17,7 +17,8 @@ def find_teacher_rating(teacher_name: str):
     pageDataTemp = re.findall(r'ShowRatings\.jsp\?tid=\d+', pageData)
 
     if len(pageDataTemp) > 0:
-        for teacher_id in pageDataTemp:
+        for i in range(0, 2):
+            teacher_id = pageDataTemp[i]
             finalUrl = "https://www.ratemyprofessors.com/" + teacher_id
             page = requests.get(finalUrl).text
             if page.find("NameTitle__Name-dowf0z-0 cfjPUG") + 39 < len(page) and len(teacher_name) == 2:
