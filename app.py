@@ -4,6 +4,7 @@
 from flask import Flask, request,render_template
 import os
 import urllib
+import random
 import re
 from time_compare import TimeComparison
 from logic import get_optimal_time
@@ -18,6 +19,9 @@ c_input = []
 times_list = []
 table_dict = dict()
 time_increments = ['7:00 AM', '8:00 AM','9:00 AM','10:00 AM','11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM','4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM','8:00 PM', '9:00 PM'  ]
+colors = ['color1','color2','color3','color4','color5','color6','color7','color8']
+
+#['#DFFF00','#FFBF00','#FF7F50','#DE3163','#9FE2BF','#40E0D0','#6495ED','#CCCCFF']
 #time_increments= enumerate(time_increments)
 #gen_courses = [{'35570 ': {'name': 'I&C SCI 33', 'type': 'LEC', 'time': 'MWF   1:00- 1:50p', 'final': 'Wed, Mar 17, 1:30-3:30pm', 'status': 'OPEN', 'section': 'A', 'instructor': 'PATTIS, R.'}, '35581 ': {'name': 'I&C SCI 33', 'type': 'LAB', 'time': 'TuTh  2:00- 3:50p', 'final': '', 'status': 'OPEN', 'section': '1', 'instructor': 'CHIO, A.'}, '35600 ': {'name': 'I&C SCI 45', 'type': 'LEC', 'time': 'TuTh  5:00- 6:20p', 'final': 'Thu, Mar 18, 4:00-6:00pm', 'status': 'OPEN', 'section': 'A', 'instructor': 'IBRAHIM, M.'}, '33303 ': {'name': 'WRITING 39C', 'type': 'SEM', 'time': 'TBA', 'final': '', 'status': 'OPEN', 'section': 'C', 'instructor': 'VENEGAS, Y.'}}, 3.8]
 
@@ -50,7 +54,7 @@ def getform():
 
 def format_time(classes: dict) -> [(str, set, int, int)]:
     list_to_return = []
-    for c in classes.values():
+    for v,c in classes.items():
         if c['time'] == '*TBA*':
             continue
         c_time = TimeComparison(c['time'])
@@ -61,11 +65,12 @@ def format_time(classes: dict) -> [(str, set, int, int)]:
 
         start_tot_mins = start_minute + 60 * start_hour
         end_tot_mins = end_minute + 60 * end_hour
-        list_to_return.append( (c['name'] + ' ' + c['type'], c_time.days, start_tot_mins, end_tot_mins) )
+        list_to_return.append( (v, c_time.days, start_tot_mins, end_tot_mins) )
     return list_to_return
 
 
 def make_courses():
+    temp_colors = colors.copy()
     global c_input,gen_courses,times_list
     c_input = []
     gen_courses = []
@@ -79,6 +84,10 @@ def make_courses():
     elif message['time'] == 'Afternoon':
         pref_time = ('14:00','19:00')
     gen_courses = get_optimal_time(courses,pref_time)
+    for c in gen_courses[0].keys():
+        if len(temp_colors) == 0:
+            temp_colors = colors.copy()
+        gen_courses[0][c]['color'] = temp_colors.pop(random.randrange(len(temp_colors)))
     times_list = format_time(gen_courses[0])
 
 def make_table():

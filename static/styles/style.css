@@ -65,7 +65,7 @@ footer{
 .left .addedcourses{
   margin-bottom: 3%;
   display:inline-block;
-  width: 20%;
+  width: 30%;
   height: 30%;
   border-radius: 5px;
   border: 2px solid var(--header);
@@ -82,6 +82,7 @@ footer{
     float:left;
     margin-top: .3em;
     margin-left: .2em;
+    font-size: .9vw;
 }
 
 .left .addedcourses .course:nth-child(even) {background-color: var(--hue);}
@@ -93,13 +94,13 @@ footer{
     float: right;
     border: none;
     height: 100%;
-    width: 2em;
+    width: 1.5vw;
+    font-size: .8vw;
     border-left: 1px solid white;
     background-color: var(--left_bg);
 }
 /****/
 .left .add-course{
-  width: 60%;
   height: 40%;
   border-radius: 5px;
   border: 2px solid var(--header);
@@ -222,7 +223,10 @@ footer{
 .right #Filter table,.right #Filter th,.right #filter td{
     border-collapse:collapse;
     border-style: hidden;
-    padding: .5em;
+    white-space:nowrap
+}
+.right #Filter td{
+    padding: 5px;
 }
 .right #Filter table{
 	width: 60%;
@@ -269,13 +273,13 @@ footer{
 }
 .right #Timetable td{
     color: black;
-    padding: 10px;
-	height: 1em;
+    padding: 5px;
+	height: .7em;
 }
 .right #Timetable td:nth-child(1){
     width: 10%;
 	font-weight: bold;
-	font-size: 1em;
+	font-size: .7em;
 }
 .right #Timetable td:nth-child(n+2){
     width: 18%;
@@ -291,4 +295,29 @@ footer{
 .right .mod{
 	vertical-align: top;
 	background-color: #BEF2F1;
+}
+
+#color1{
+    background-color:#ffe66d;
+}
+#color2{
+    background-color:#FFBF00;
+}
+#color3{
+    background-color:#FF7F50;
+}
+#color4{
+    background-color: #ff70a6;
+}
+#color5{
+    background-color: #9FE2BF;
+}
+#color6{
+    background-color:#40E0D0;
+}
+#color7{
+    background-color: #6495ED;
+}
+#color8{
+    background-color: #CCCCFF;
 }

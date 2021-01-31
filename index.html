@@ -26,7 +26,7 @@
                 <center>
                     <h2>Added Courses:</h2>
 					{% if 'year' in message and 'quarter' in message and 'time' in message%}
-						<p>{{message['year'],message['quarter'],message['time']}}</p>
+                        <p> {{message['time'] + ", " + message['quarter'] + " " ~ message['year']}}</p>
 					{% endif %}
 					<div class='addedcourses'>
 					{% if 'courses' in message and message['courses']|length > 0%}
@@ -44,7 +44,7 @@
 								<div class='qy'>
 									<div class='quarter'>
 										<label>Quarter</label>
-										<input name="quarter" list='qs' class = "course-field" type="text">
+										<input name="quarter" list='qs' class = "course-field" type="text" required>
 										<datalist id='qs'>
 											<option value="SUMMER1">SUMMER SESSION 1</option>
 											<option value="SUMMER2">SUMMER SESSION 2</option>
@@ -57,12 +57,12 @@
 									</div>
 									<div class= "year">
 										<label class="text course-field">Year</label>
-										<input name="year" class = "course-field" type="text">
+										<input name="year" class = "course-field" type="text" required>
 									</div>
 								</div>
 								 <div class= "time">
 									<label class="text course-field">Preferred Start Time</label>
-									<input name="time" list='ts' class = "course-field" type="text">
+									<input name="time" list='ts' class = "course-field" type="text" required>
 									<datalist id='ts'>
 										<option value="Morning">Morning</option>
 										<option value="Noon">Noon</option>
@@ -78,7 +78,7 @@
                         <div class = 'add-course'>
                             <div class='department'>
                                 <label class="text course-field">Department</label>
-                                <input name="department" list='deps' class = "course-field" type="text">
+                                <input name="department" list='deps' class = "course-field" type="text" required>
                                 <datalist id="deps">
                                                 <option value=" ALL">Include All Departments</option>
                                                 <option value="AC ENG">AC ENG . . . . . .Academic English</option>
@@ -232,7 +232,7 @@
                             </div>
                             <div class='coursenumber'>
                                 <label class="text course-field">Course Number</label>
-                                <input name="course-number" type="text">
+                                <input name="course-number" type="text" required>
                             </div>
      
                         </div>
@@ -251,7 +251,10 @@
 				</div>
 				<div class='tab' id='Filter' style="display:flex">
 					<center>
-						<h2>Generated Courses:</h2>
+                        <h2>Generated Courses:</h2>
+                        {% if gen_courses[1] != -1 %}
+                            <p>Average RateMyProfessor Score: {{gen_courses[1]}}</p>
+                        {% endif %}
 						{% if gen_courses == []%}
 						<p>No Courses Were Generated.</p>
 							{%else%}
@@ -268,7 +271,7 @@
 							</tr>
 							{% for c,v in gen_courses[0].items()%}
 							<tr>
-								<td>{{v['name']}}</td>
+								<td id = "{{ v['color'] }}">{{v['name']}}</td>
 								<td>{{v['type']}}</td>
 								<td>{{c}}</td>
 								<td>{{v['instructor']}}</td>
@@ -314,7 +317,7 @@
 
                             {% if (interval in table_dict) and ('M' in table_dict[interval][1]) %}
                             
-                            <td class='mod' rowspan =  {{  (table_dict[interval][3] - table_dict[interval][2])  //10 }} > {{table_dict[interval][0]}}</td>
+                            <td class='mod' id = "{{ gen_courses[0][table_dict[interval][0]]['color'] }}" rowspan =  {{  (table_dict[interval][3] - table_dict[interval][2])  //10 }} > <b>{{gen_courses[0][table_dict[interval][0]]['name'] + " " + gen_courses[0][table_dict[interval][0]]['type']}}</b><br>{{table_dict[interval][0]}}<br>{{gen_courses[0][table_dict[interval][0]]['time']}}</td>
 
                             {%else%}
                             <td></td>
@@ -323,7 +326,7 @@
                             
                             {% if (interval in table_dict) and ('Tu' in table_dict[interval][1]) %}
                             
-                            <td class='mod' rowspan =  {{(table_dict[interval][3] - table_dict[interval][2])//10 }} > {{table_dict[interval][0]}}</td>
+                            <td class='mod' id = "{{ gen_courses[0][table_dict[interval][0]]['color'] }}" rowspan =  {{  (table_dict[interval][3] - table_dict[interval][2])  //10 }} > <b>{{gen_courses[0][table_dict[interval][0]]['name'] + " " + gen_courses[0][table_dict[interval][0]]['type']}}</b><br>{{table_dict[interval][0]}}<br>{{gen_courses[0][table_dict[interval][0]]['time']}}</td>
 
                             {%else%}
                             <td></td>
@@ -332,7 +335,7 @@
 
                             {% if (interval in table_dict) and ('W' in table_dict[interval][1]) %}
                             
-                            <td class='mod' rowspan =  {{(table_dict[interval][3] - table_dict[interval][2])//10 }} > {{table_dict[interval][0]}}</td>
+                            <td class='mod' id = "{{ gen_courses[0][table_dict[interval][0]]['color'] }}" rowspan =  {{  (table_dict[interval][3] - table_dict[interval][2])  //10 }} > <b>{{gen_courses[0][table_dict[interval][0]]['name'] + " " + gen_courses[0][table_dict[interval][0]]['type']}}</b><br>{{table_dict[interval][0]}}<br>{{gen_courses[0][table_dict[interval][0]]['time']}}</td>
 
                             {%else%}
                             <td></td>
@@ -341,7 +344,7 @@
 
                             {% if (interval in table_dict) and ('Th' in table_dict[interval][1]) %}
                             
-                            <td class='mod' rowspan =  {{(table_dict[interval][3] - table_dict[interval][2])//10 }} > {{table_dict[interval][0]}}</td>
+                            <td class='mod' id = "{{ gen_courses[0][table_dict[interval][0]]['color'] }}" rowspan =  {{  (table_dict[interval][3] - table_dict[interval][2])  //10 }} > <b>{{gen_courses[0][table_dict[interval][0]]['name'] + " " + gen_courses[0][table_dict[interval][0]]['type']}}</b><br>{{table_dict[interval][0]}}<br>{{gen_courses[0][table_dict[interval][0]]['time']}}</td>
 
                             {%else%}
                             <td></td>
@@ -350,7 +353,7 @@
 
                             {% if (interval in table_dict) and ('F' in table_dict[interval][1]) %}
                             
-                            <td class='mod' rowspan =  {{(table_dict[interval][3] - table_dict[interval][2])//10 }} > {{table_dict[interval][0]}}</td>
+                            <td class='mod' id = "{{ gen_courses[0][table_dict[interval][0]]['color'] }}" rowspan =  {{  (table_dict[interval][3] - table_dict[interval][2])  //10 }} > <b>{{gen_courses[0][table_dict[interval][0]]['name'] + " " + gen_courses[0][table_dict[interval][0]]['type']}}</b><br>{{table_dict[interval][0]}}<br>{{gen_courses[0][table_dict[interval][0]]['time']}}</td>
 
                             {%else%}
                             <td> </td>
