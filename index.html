@@ -15,14 +15,20 @@
                 <h2 class="main-title">Choose A Course</h2>
                 <center>
                     <h2>Added Courses:</h2>
-                    <div class='addedcourses'>
-                      <div class='course'><div class='name'>ICS 33</div><button class='remove'>X</button></div>
-                      <div class='course'><div class='name'>INF 43</div><button class='remove'>X</button></div>
-                    </div>
-					{% if message %}
-						<p>{{ message }}</p>
+					{% if 'year' in message and 'quarter' in message and 'time' in message%}
+						<p>{{message['year'],message['quarter'],message['time']}}</p>
 					{% endif %}
+					<div class='addedcourses'>
+					{% if 'courses' in message and message['courses']|length > 0%}
+						{%for i in range(0,message['courses']|length)%}
+						 <form method="post"><div class='course'><div class='name'>{{message['courses'][i][1]}} {{message['courses'][i][0]}}</div><button class='remove' type='submit'><input type="hidden" name="course_rem" value={{i}}>X</button></div></form>
+						{%endfor%}
+					{%else%}
+					No classes added
+					{% endif %}
+					</div>
                     <form method='post' name='const'>
+						<input type="hidden" name="form" value="const">
                         <div class = 'add-course'>
                         <div class='quarter'>
                                 <label>Quarter</label>
@@ -41,8 +47,15 @@
                                 <label>Year</label>
                                 <input name="year" class='year' type="text">
                             </div>
+							 <div class= "time">
+                                <label class="text course-field">Preferred Time</label>
+                                <input name="time" type="text">
+                            </div>
                         </div>
-                    <form method='post' name='speccourse'>                        
+						<button class='submit' type='submit'>Update</button>
+					</form>
+                    <form method='post' name='speccourse'>    
+						<input type="hidden" name="form" value="speccourse">                    
                         <div class = 'add-course'>
                             <div class='department'>
                                 <label class="text course-field">Department</label>
@@ -202,10 +215,7 @@
                                 <label class="text course-field">Course Number</label>
                                 <input name="course-number" type="text">
                             </div>
-                            <div class= "time">
-                                <label class="text course-field">Preferred Time</label>
-                                <input name="time" type="text">
-                            </div>
+     
                         </div>
                         <button class='submit' type='submit'>Add Course</button>
                     </form>
