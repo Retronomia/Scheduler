@@ -1,6 +1,6 @@
 <h1>UCI Schedule Creator Installation Instructions</h1>
 
-Python 3.8.6 or higher is recommended.
+Python 3.8.6 or higher is recommended. Git must be installed.
 
 To successfully install UCI Schedule Creator, please follow these instructions:
 1. In the terminal, use the command `git clone https://github.com/Retronomia/Scheduler.git`
