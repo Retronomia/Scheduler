@@ -187,6 +187,50 @@ footer{
     flex: 1 1 auto;
     height: 100%;
 }
+.right .navigation{
+	width: 100%;
+	background-color: var(--h_shadow);
+	display: inline-flex;
+}
+.right .navigation button{
+	padding: 2em;
+	font-weight: bold;
+	border: none;
+	background-color: #ffffff;
+	cursor: pointer;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+}
+.right .navigation button:focus{
+	outline:none;
+	background-color: #ddd;
+}
+.right .tab{
+	display:flex;
+	flex-flow: column;
+	flex: 1;
+	height: 100%;
+	height: 0;
+}
+
+.right #Filter table,.right #Filter th,.right #filter td{
+    border-collapse:collapse;
+    border-style: hidden;
+    padding: .5em;
+}
+.right #Filter table{
+	width: 60%;
+}
+.right #Filter th {
+  background-color: var(--h_shadow);
+  color: white;
+}
+.right #Filter tr:nth-child(even) {background-color: #f2f2f2;}
+.right #Filter tr:nth-child(odd) {background-color: #ffffff;}
+.right #Filter th, .left td{border: 1px solid black;}
+.right #Filter .addedcourses td:nth-child(2):hover {background-color: red;cursor:pointer;}
+
+
 
 .main-title{
     font-style: bold;
@@ -199,13 +243,13 @@ footer{
   flex: 1;
   height: 0;
 }
-.right table,.right th,.right td{
+.right #Timetable table,.right #Timetable th,.right #Timetable td{
     border-right: 1px solid black;
     border-bottom: 1px solid black;
     table-layout:fixed;
     width: 100%;
 }
-.right th{
+.right #Timetable th{
     position: sticky;
     top: 0;
     background-color: var(--h_shadow);
@@ -213,18 +257,18 @@ footer{
     padding: 15px;
 
 }
-.right table{
+.right #Timetable table{
     width: 100%;
     border-collapse:collapse;
 }
-.right td{
+.right #Timetable td{
     color: black;
     padding: 15px;
 }
-.right td:nth-child(1){
+.right #Timetable td:nth-child(1){
     width: 10%;
 }
-.right td:nth-child(n+2){
+.right #Timetable td:nth-child(n+2){
     width: 18%;
 }
 .right .fixedTable{
