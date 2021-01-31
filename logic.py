@@ -1,69 +1,40 @@
 from schedule_api import find_teacher_rating
+from time_compare import TimeComparison
 import re
-
-# For TimeComparison class
-TIME_RE = re.compile(
-    r'^((?P<mon>M)|(?P<tue>Tu)|(?P<wed>W)|(?P<thu>Th)|(?P<fri>F))+ +(?P<hstart>\d?\d):(?P<mstart>\d\d)- *(?P<hend>\d?\d):(?P<mend>\d\d)(?P<pm>p)?$')
-FINAL_RE = re.compile(r'^(?P<day>.+)(?P<hstart>\d?\d):(?P<mstart>\d\d)- *(?P<hend>\d?\d):(?P<mend>\d\d)(?P<pm>pm)$')
-
-# also someone needs needs to create fake api function in schedule api
-
-# Class is helpful for is_valid_time
-class TimeComparison:
-    def __init__(self, time_str):
-        match = re.match(TIME_RE, time_str)
-        if match:
-            self.days = set()
-            if match.group('mon'):
-                self.days.add('M')
-            if match.group('tue'):
-                self.days.add('Tu')
-            if match.group('wed'):
-                self.days.add('W')
-            if match.group('thu'):
-                self.days.add('Th')
-            if match.group('fri'):
-                self.days.add('F')
-        if not match:
-            match = re.match(FINAL_RE, time_str)
-            self.days = {match.group('day')}
-
-        self.start_time = (int(match.group('hstart')), int(match.group('mstart')))
-        self.end_time = (int(match.group('hend')), int(match.group('mend')))
-
-        if match.group('pm') and self.end_time[0] != 12:
-            self.end_time = self.end_time[0] + 12, self.end_time[1]
-        if abs(self.end_time[0] - self.start_time[0]) > 4:
-            self.start_time = self.start_time[0] + 12, self.start_time[1]
-
-    def conflicts_with(self, other: 'TimeComparison') -> bool:
-        same_days = False
-        for day in self.days:
-            if day in other.days:
-                same_days = True
-
-        if not same_days:
-            return False
-
-        starts_after_other_ends = False
-        ends_before_other_starts = False
-
-        if self.start_time[0] > other.end_time[0]:
-            starts_after_other_ends = True
-        elif self.start_time[0] == other.end_time[0] and self.start_time[1] >= other.end_time[1]:
-            starts_after_other_ends = True
-
-        if self.end_time[0] < other.start_time[0]:
-            ends_before_other_starts = True
-        elif self.end_time[0] == other.start_time[0] and self.end_time[1] <= other.start_time[1]:
-            ends_before_other_starts = True
-
-        return not (starts_after_other_ends or ends_before_other_starts)
+import copy
+import websoc_data
 
 
-def generate_all_classes(classes: list) -> list:
+# {name: {course_code:{instructor: str, type: str, time: str, final: str, status: str, section: str}, ...},...}
+
+def separate_non_classes(classes: dict) -> None:
+    iteration_list_first = list(classes.keys())
+    for class_name in iteration_list_first:
+        iteration_list_second = list(classes[class_name].keys())
+        type_to_check = classes[class_name][iteration_list_second[0]]["type"]
+        for course_code in iteration_list_second:
+            type1 = classes[class_name][course_code]["type"]
+
+            if type1 != type_to_check:
+                if str(class_name + " " + type1) not in classes.keys():
+                    classes[str(class_name + " " + type1)] = {course_code: classes[class_name][course_code]}
+                else:
+                    classes[str(class_name + " " + type1)][course_code] = classes[class_name][course_code]
+                del classes[class_name][course_code]
+
+
+def generate_all_classes(classes: dict, index: int, current_schedule: dict, valid_list) -> list:
     # recursive, generate list of all possible schedules - no matter valid or not
-    pass
+    result = {}
+    if index == len(list(classes.keys())) and is_valid_time(current_schedule):
+        valid_list.append(current_schedule)
+        return
+    current_class = sorted(list(classes.keys()))[index]
+    # print(current_class, classes[current_class])
+    for class_times in list(classes[current_class].items()):
+        next_schedule = copy.deepcopy(current_schedule)
+        next_schedule[class_times[0]] = copy.deepcopy(class_times[1])
+        generate_all_classes(classes, index + 1, next_schedule, valid_list)
 
 
 # lmk what you think, but this should just be a dict, not a list, if we're sorting by
@@ -94,33 +65,76 @@ def is_valid_time(classes: dict) -> bool:
     return True
 
 
-def rate_prof(course: dict) -> int:
+# {course_code:{instructor: str, type: str, time: str, final: str, status: str, section: str}, ...}
+def rate_prof(classes: dict, cache: dict) -> int:
     # rates based on professor rating, higher rating = good
-    # nathan
-    pass
+    result = 0
+    total_number = 0
+    for class1 in classes.values():
+        if class1["type"] == "LEC":
+            if "instructor" in class1.keys() and class1["instructor"] in cache.keys():
+                result_temp = cache[class1["instructor"]]
+            elif "instructor" in class1.keys():
+                result_temp = find_teacher_rating(class1["instructor"])
+                cache[class1["instructor"]] = result_temp
+            if result_temp != {}:
+                result += float(result_temp['rating'])
+                total_number += 1
+    return result / total_number
 
 
-def rate_time(course: dict, pref_time: (str, str)) -> int:
+def rate_time(classes: dict, pref_time: (str, str)) -> float:
     # pref_time input should be a tuple (10:30, 15:30) in 24hour time
-    # rates based on distance from time; bigger distance = higher rating, higher rating = bad
-    pref_h_1, pref_m_1 = pref_time[0].split(':')
-    pref_h_2, pref_m_2 = pref_time[1].split(':')
+    # rates based on distance from time; bigger distance = lower rating, higher rating = good
+    total_score = 0
+    for course in classes.values():
+        if course['time'] == '*TBA*':
+            continue
+        pref_h_1, pref_m_1 = pref_time[0].split(':')
+        pref_h_2, pref_m_2 = pref_time[1].split(':')
 
-    pref_total_mins_1 = pref_m_1 + 60 * pref_h_1
-    pref_total_mins_2 = pref_m_2 + 60 * pref_h_2
-    pref_avg_mins = round((pref_total_mins_1 + pref_total_mins_2) / 2)
+        pref_total_mins_1 = int(pref_m_1) + 60 * int(pref_h_1)
+        pref_total_mins_2 = int(pref_m_2) + 60 * int(pref_h_2)
+        pref_avg_mins = round((pref_total_mins_1 + pref_total_mins_2) / 2)
 
-    class_time = TimeComparison(course['time'])
+        class_time = TimeComparison(course['time'])
 
-    course_start_mins = class_time.start_time[1] + 60 * class_time.start_time[0]
-    course_end_mins = class_time.end_time[1] + 60 * class_time.end_time[0]
-    course_avg_mins = round((course_start_mins + course_end_mins) / 2)
+        course_start_mins = class_time.start_time[1] + 60 * class_time.start_time[0]
+        course_end_mins = class_time.end_time[1] + 60 * class_time.end_time[0]
+        course_avg_mins = round((course_start_mins + course_end_mins) / 2)
 
-    return abs(pref_avg_mins - course_avg_mins)
+        total_score += abs(pref_avg_mins - course_avg_mins)
+
+    return 5 - (total_score / 144)
+
+
+def get_optimal_time(classes: dict, pref_time: (str, str)):
+    # pref_time input should be a tuple (10:30, 15:30) in 24hour time
+    separate_non_classes(classes)
+    valid_list = []
+    generate_all_classes(classes, 0, {}, valid_list)
+    best_rating = -1
+    current_optimal = {}
+    avg_prof_rating = 0
+    cache = {}
+    for valid_schedule in valid_list:
+
+        prof_rate = rate_prof(valid_schedule, cache)
+        time_rate = rate_time(valid_schedule, pref_time)
+        weighted_rating = 0.7 * prof_rate + 0.3 * time_rate
+        if weighted_rating > best_rating:
+            current_optimal = valid_schedule
+            best_rating = weighted_rating
+            avg_prof_rating = prof_rate
+    return [current_optimal, avg_prof_rating]
 
 
 if __name__ == '__main__':
-    # file = open('courses.json')
-    # data = json.load(file)
-    test_dict = [{'I&C SCI 33': {'instructor': 'Patty', "type": "code", "time": '1:00pm', "final": "1:00pm 1/20/12",
-                                 'status': 'Full', 'section': '2A'}}]
+    pref_time = ("10:30", "15:30")
+    test_classes = [("I&C SCI", "33", "2021", "WINTER"), ("I&C SCI", "45", "2021", "WINTER"),
+                    ("WRITING", "39C", "2021", "WINTER")]
+    test_dict = websoc_data.get_data(test_classes)
+    # print("testdict", test_dict)
+
+    results = get_optimal_time(test_dict, pref_time)
+    print("optimal", results)
