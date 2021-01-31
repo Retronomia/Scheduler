@@ -56,7 +56,6 @@ def getform():
             del message['courses'][int(request.form['course_rem'])]
         elif 'course_gen' in request.form and 'courses' in message and len(message['courses']) > 0 and 'quarter' in message and 'year' in message and 'time' in message:
             errmsg = make_courses()
-            make_table()
     return render_template('index.html', message=message,gen_courses=gen_courses,c_input = c_input, time_increments = time_increments, table_dict = table_dict,errmsg=errmsg)
 
 
@@ -80,7 +79,7 @@ def format_time(classes: dict) -> [(str, set, int, int)]:
 def make_courses():
     try:
         temp_colors = colors.copy()
-        global c_input,gen_courses,times_list
+        global c_input,gen_courses,times_list,table_dict
         c_input = []
         gen_courses = []
         for course in message['courses']:
@@ -98,8 +97,10 @@ def make_courses():
                 temp_colors = colors.copy()
             gen_courses[0][c]['color'] = temp_colors.pop(random.randrange(len(temp_colors)))
         times_list = format_time(gen_courses[0])
+        make_table()
         return ""
     except:
+        table_dict = dict()    
         return "Error with course generation"       
 
 def make_table():
