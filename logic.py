@@ -2,7 +2,7 @@ from schedule_api import find_teacher_rating
 from time_compare import TimeComparison
 import re
 import copy
-import websoc_data
+import app.websoc_data
 
 
 # {name: {course_code:{instructor: str, type: str, time: str, final: str, status: str, section: str}, ...},...}
