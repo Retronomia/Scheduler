@@ -57,8 +57,6 @@ footer{
 /**LEFT CONTENTS**/
 .left{
     background-color: var(--left_bg);
-    width: 40%;
-    overflow-y: auto;
     color: white;
 }
 /**ADDED COURSES**/
@@ -189,7 +187,7 @@ footer{
 .right{
     background-color: var(--right_bg);
     float:right;
-    width: 60%;
+    width: 100%;
     display:flex;
     flex-flow: column;
     flex: 1 1 auto;
