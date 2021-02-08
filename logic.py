@@ -1,8 +1,8 @@
 from schedule_api import find_teacher_rating
-from time_compare import TimeComparison
+from time_compare import TimeComparison, TIME_RE, FINAL_RE
 import re
 import copy
-import app.websoc_data
+import websoc_data
 
 
 # {name: {course_code:{instructor: str, type: str, time: str, final: str, status: str, section: str}, ...},...}
@@ -36,9 +36,6 @@ def generate_all_classes(classes: dict, index: int, current_schedule: dict, vali
         next_schedule[class_times[0]] = copy.deepcopy(class_times[1])
         generate_all_classes(classes, index + 1, next_schedule, valid_list)
 
-
-# lmk what you think, but this should just be a dict, not a list, if we're sorting by
-# course code v
 # {course_code:{instructor: str, type: str, time: str, final: str, status: str, section: str}, ...}
 
 # Tested somewhat, this seems to work!!!
@@ -50,12 +47,12 @@ def is_valid_time(classes: dict) -> bool:
     # TuTh  6:30- 7:50p
 
     for class1 in classes.values():
-        if class1['final'] == '' or class1['time'] == '*TBA*':
+        if not FINAL_RE.match(class1['final']) or not TIME_RE.match(class1['time']):
             continue
         class1_time = TimeComparison(class1['time'])
         class1_final = TimeComparison(class1['final'])
         for class2 in classes.values():
-            if class1 is class2 or class2['final'] == '' or class2['time'] == '*TBA*':
+            if class1 is class2 or not FINAL_RE.match(class2['final'])  or not TIME_RE.match(class2['time']):
                 continue
             class2_time = TimeComparison(class2['time'])
             class2_final = TimeComparison(class2['final'])
@@ -103,7 +100,7 @@ def rate_time(classes: dict, pref_time: (str, str)) -> float:
     # rates based on distance from time; bigger distance = lower rating, higher rating = good
     total_score = 0
     for course in classes.values():
-        if course['time'] == '*TBA*':
+        if not TIME_RE.match(course['time']):
             continue
         pref_h_1, pref_m_1 = pref_time[0].split(':')
         pref_h_2, pref_m_2 = pref_time[1].split(':')

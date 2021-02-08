@@ -1,12 +1,12 @@
 #testing out flask
 #no hate name plz is beautiful
 
-from flask import Flask, request,render_template
+from flask import Flask, request, render_template, redirect
 import os
 import urllib
 import random
 import re
-from time_compare import TimeComparison
+from time_compare import TimeComparison, TIME_RE
 from logic import get_optimal_time
 from websoc_data import get_data
 from datetime import datetime
@@ -14,12 +14,6 @@ from datetime import datetime
 project_root = os.path.dirname(__file__)
 template_path = os.path.join(project_root, './')
 app = Flask(__name__, template_folder=template_path)
-message = dict()
-gen_courses = []
-c_input = []
-times_list = []
-table_dict = dict()
-errmsg = ''
 time_increments = ['7:00 AM', '8:00 AM','9:00 AM','10:00 AM','11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM','4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM','8:00 PM', '9:00 PM'  ]
 colors = ['color1','color2','color3','color4','color5','color6','color7','color8']
 
@@ -31,17 +25,22 @@ colors = ['color1','color2','color3','color4','color5','color6','color7','color8
 def page_not_found(e):
     return render_template('404.html'), 404
 
+# @app.before_request
+# def before_request():
+#     if request.url.startswith('http://'):
+#         url = request.url.replace('http://', 'https://', 1)
+#         code = 301
+#         return redirect(url, code=code)
+
 @app.route('/', methods=['post', 'get'])
 def getform():
-    global errmsg, message, gen_courses, c_input, times_list, table_dict
     message = dict()
     gen_courses = []
     c_input = []
     times_list = []
     table_dict = dict()
-
+    errmsg = ''
     if request.method == 'POST':
-        print(request.form)
         quarter = request.form.get('quarter')  # access the data inside
         year = request.form.get('year')
         time = request.form.get('time')
@@ -55,16 +54,15 @@ def getform():
             cnumber = request.form.get('course-number' + str(i))
             if department != "" and cnumber != "" and department != None and cnumber != None:
                 message['courses'].append((cnumber, department))
-        #if 'courses' in message and len(message['courses']) > 0 and 'quarter' in message and 'year' in message and 'time' in message:
-        errmsg = make_courses()
-        print(gen_courses, message)
+
+        errmsg, table_dict, gen_courses = make_courses(c_input,times_list,table_dict, message)
     return render_template('index.html', message=message,gen_courses=gen_courses,c_input = c_input, time_increments = time_increments, table_dict = table_dict,errmsg=errmsg)
 
 
 def format_time(classes: dict) -> [(str, set, int, int)]:
     list_to_return = []
     for v,c in classes.items():
-        if c['time'] == '*TBA*':
+        if not TIME_RE.match(c['time']):
             continue
         c_time = TimeComparison(c['time'])
         start_hour, start_minute = c_time.start_time
@@ -78,12 +76,9 @@ def format_time(classes: dict) -> [(str, set, int, int)]:
     return list_to_return
 
 
-def make_courses():
+def make_courses(c_input,times_list,table_dict, message):
     try:
         temp_colors = colors.copy()
-        global c_input,gen_courses,times_list,table_dict
-        c_input = []
-        gen_courses = []
         for course in message['courses']:
             c_input.append((course[1],course[0],message['year'],message['quarter']))
         courses = get_data(c_input)
@@ -99,14 +94,14 @@ def make_courses():
                 temp_colors = colors.copy()
             gen_courses[0][c]['color'] = temp_colors.pop(random.randrange(len(temp_colors)))
         times_list = format_time(gen_courses[0])
-        make_table()
-        return ""
-    except:
+        table_dict = make_table(table_dict, times_list)
+        return "", table_dict, gen_courses
+    except Exception as e:
         table_dict = dict()    
-        return "Error with course generation"       
+        # return "Error with course generation"
+        return str(e), table_dict, gen_courses
 
-def make_table():
-    global table_dict
+def make_table(table_dict, times_list):
     dates = {'M':0,'Tu':1,'W':2,'Th':3,'F':4}
     table = [[None for day in range(0,5)] for interval in range(0,90)]
     for interval in range(0,90):
@@ -121,13 +116,7 @@ def make_table():
                         for v in range(interval+1,interval+rowspan):
                             table[v][row] = 'REM'
     table_dict = table
-
-    '''
-    for interval in range(0,90):
-        for course in times_list:
-            if (interval*10  == course[2]):
-                table_dict[interval] = course 
-    '''
+    return table_dict
 
 
 
